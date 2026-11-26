@@ -1,282 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#071827">
-  <meta name="description" content="MotoVanta — premium motorcycle accessories to help you ride smarter and better.">
-  <title>MotoVanta | Ride Smart. Ride Better.</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --navy: #071827;
-      --navy-2: #0b2235;
-      --panel: #0d263a;
-      --orange: #ff6a00;
-      --blue: #00bfff;
-      --white: #f4f8fc;
-      --muted: #a9bac8;
-      --line: rgba(0,191,255,.22);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: Inter, Arial, sans-serif;
-      color: var(--white);
-      background:
-        radial-gradient(ellipse at 8% 12%, rgba(0,191,255,.10), transparent 32%),
-        radial-gradient(ellipse at 92% 42%, rgba(255,106,0,.07), transparent 30%),
-        var(--navy);
-      line-height: 1.6;
-    }
-    a { color: inherit; text-decoration: none; }
-    .container { width: min(1160px, 90%); margin: auto; }
-    header {
-      position: sticky; top: 0; z-index: 20;
-      background: rgba(5,18,30,.90); backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(0,191,255,.16);
-      box-shadow: 0 4px 28px rgba(0,191,255,.08);
-    }
-    .nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-    .brand { font-size: 1.55rem; font-weight: 900; letter-spacing: 1.5px; }
-    .brand span { color: var(--orange); }
-    .brand small { display: block; font-size: .58rem; color: var(--muted); letter-spacing: 2.3px; font-weight: 600; margin-top: -5px; }
-    .nav-links { display: flex; gap: 30px; align-items: center; color: #d6e1e9; font-size: .9rem; }
-    .nav-links a:hover { color: var(--blue); }
-    .menu-btn { display: none; border: 1px solid var(--line); color: white; background: transparent; padding: 8px 12px; border-radius: 8px; font-size: 1.1rem; }
-    .btn {
-      display: inline-flex; justify-content: center; align-items: center;
-      padding: 13px 23px; border-radius: 8px; background: var(--orange);
-      color: #101820; font-weight: 800; border: 1px solid var(--orange);
-      box-shadow: 0 0 17px rgba(255,106,0,.32); transition: .25s;
-    }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 0 28px rgba(255,106,0,.62); }
-    .btn-outline { background: transparent; color: white; border-color: rgba(0,191,255,.55); box-shadow: 0 0 18px rgba(0,191,255,.10); }
-    .btn-outline:hover { background: rgba(0,191,255,.10); box-shadow: 0 0 24px rgba(0,191,255,.25); }
-    .hero {
-      min-height: 650px; display: flex; align-items: center; position: relative; overflow: hidden;
-      background:
-        linear-gradient(90deg, rgba(4,16,28,.96) 0%, rgba(4,16,28,.78) 48%, rgba(4,16,28,.28) 100%),
-        linear-gradient(0deg, rgba(4,16,28,.50), rgba(4,16,28,.10)),
-        url("https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=2000&q=90") center 55%/cover;
-      box-shadow: inset 0 0 110px rgba(0,191,255,.12);
-    }
-    .hero::after { content:""; position:absolute; width:380px; height:380px; border-radius:50%; right:-120px; top:12%; border:1px solid rgba(0,191,255,.25); box-shadow:0 0 70px rgba(0,191,255,.12), inset 0 0 60px rgba(0,191,255,.08); }
-    .hero-content { position: relative; z-index: 1; max-width: 680px; padding: 95px 0; }
-    .eyebrow { color: var(--blue); text-transform: uppercase; letter-spacing: 3px; font-size: .75rem; font-weight: 800; margin-bottom: 18px; }
-    h1 { font-size: clamp(2.7rem, 7vw, 5.4rem); line-height: 1.04; letter-spacing: -2.5px; margin-bottom: 22px; font-weight: 900; }
-    h1 span { color: var(--orange); text-shadow: 0 0 25px rgba(255,106,0,.25); }
-    .hero p { max-width: 540px; color: #d0dce5; font-size: 1.08rem; margin-bottom: 30px; }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 13px; }
-    section { padding: 88px 0; }
-    .section-head { text-align: center; max-width: 700px; margin: 0 auto 42px; }
-    .section-head h2 { font-size: clamp(2rem,4vw,3rem); line-height: 1.15; margin-bottom: 13px; }
-    .section-head h2 span { color: var(--orange); }
-    .section-head p { color: var(--muted); }
-    .products { background: linear-gradient(180deg, rgba(11,34,53,.45), rgba(7,24,39,.25)); }
-    .product-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 23px; }
-    .product-card {
-      background: linear-gradient(145deg, rgba(16,43,63,.96), rgba(7,24,39,.98));
-      border: 1px solid rgba(0,191,255,.28); border-radius: 16px; overflow: hidden;
-      box-shadow: 0 12px 35px rgba(0,0,0,.24), 0 0 18px rgba(0,191,255,.06);
-      transition: .28s;
-    }
-    .product-card:hover { transform: translateY(-7px); border-color: var(--orange); box-shadow: 0 18px 40px rgba(0,0,0,.32), 0 0 26px rgba(255,106,0,.17), 0 0 14px rgba(0,191,255,.12); }
-    .product-image { height: 245px; background: radial-gradient(circle at 50% 45%, #1b4058, #091b2b 70%); display:flex; align-items:center; justify-content:center; overflow:hidden; }
-    .product-image img { width:100%; height:100%; object-fit:contain; padding:18px; transition:transform .4s; }
-    .product-card:hover .product-image img { transform:scale(1.045); }
-    .product-info { padding: 23px; }
-    .product-info h3 { font-size: 1.2rem; margin-bottom: 8px; }
-    .product-info p { color: var(--muted); font-size: .92rem; min-height: 48px; margin-bottom: 18px; }
-    .product-link { color: var(--orange); font-weight: 800; font-size: .9rem; }
-    .product-link:hover { color: var(--blue); }
-    .about-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items:center; }
-    .about-photo { min-height: 390px; border-radius: 18px; background:
-      linear-gradient(0deg,rgba(5,18,30,.15),rgba(5,18,30,.15)),
-      url("https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=1200&q=85") center/cover;
-      border:1px solid rgba(0,191,255,.28); box-shadow:0 0 35px rgba(0,191,255,.10); }
-    .about-copy h2 { font-size: clamp(2rem,4vw,3rem); line-height:1.15; margin-bottom:18px; }
-    .about-copy h2 span { color:var(--orange); }
-    .about-copy p { color:var(--muted); margin-bottom:18px; }
-    .feature-strip { padding: 34px 0; background: linear-gradient(90deg,rgba(0,191,255,.07),rgba(255,106,0,.06)); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
-    .features { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; text-align:center; }
-    .feature strong { display:block; font-size:1.02rem; margin-bottom:5px; }
-    .feature span { color:var(--muted); font-size:.87rem; }
-    .feature-icon { color:var(--blue); font-size:1.5rem; margin-bottom:7px; }
-    .cta { text-align:center; background: radial-gradient(ellipse at center,rgba(0,191,255,.10),transparent 62%); }
-    .cta h2 { font-size:clamp(2rem,4vw,3rem); margin-bottom:12px; }
-    .cta p { color:var(--muted); margin:0 auto 25px; max-width:580px; }
-    footer { padding: 36px 0; background:#04111d; border-top:1px solid rgba(0,191,255,.2); box-shadow:0 -4px 30px rgba(0,191,255,.06); }
-    .footer-row { display:flex; justify-content:space-between; gap:20px; align-items:center; flex-wrap:wrap; }
-    footer p, footer a { color:var(--muted); font-size:.85rem; }
-    .affiliate-disclosure {
-      margin-top: 18px;
-      padding-top: 16px;
-      border-top: 1px solid rgba(0,191,255,.12);
-      color: var(--muted);
-      font-size: .82rem;
-      line-height: 1.7;
-    }
-    .affiliate-disclosure strong { color: var(--orange); }
-    .footer-links { display:flex; gap:20px; flex-wrap:wrap; }
-    .footer-links a:hover { color:var(--orange); }
-    @media(max-width:800px) {
-      .nav-links { display:none; position:absolute; top:76px; left:0; right:0; background:#061827; padding:22px 5%; flex-direction:column; align-items:flex-start; border-bottom:1px solid var(--line); }
-      .nav-links.open { display:flex; }
-      .menu-btn { display:block; }
-      .nav .nav-cta { display:none; }
-      .hero { min-height:590px; background-position:58% center; }
-      .product-grid { grid-template-columns:1fr 1fr; }
-      .about-grid { grid-template-columns:1fr; gap:28px; }
-      .about-photo { min-height:300px; }
-    }
-    @media(max-width:560px) {
-      section { padding:66px 0; }
-      .product-grid { grid-template-columns:1fr; }
-      .product-image { height:260px; }
-      .features { grid-template-columns:1fr; gap:25px; }
-      .hero-content { padding:75px 0; }
-      h1 { letter-spacing:-1.5px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07111f">
+<meta name="description" content="MotoVanta is a premium destination for motorcycle accessories, moto vlogging kits, creator gear and rider guides. Ride Smart. Ride Better.">
+<title>MotoVanta — Premium Riding Gear & Creator Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07111f;--bg2:#091827;--panel:#0e1d30;--panel2:#132840;--line:rgba(168,195,220,.15);--white:#f4f8fc;--muted:#9aadc1;--orange:#ff6b24;--blue:#25baff;--max:1200px;--radius:15px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;background:var(--bg);color:var(--white);font-family:Inter,Arial,sans-serif;line-height:1.6}a{color:inherit;text-decoration:none}img{display:block;max-width:100%}button,input{font:inherit}.wrap{width:min(var(--max),calc(100% - 42px));margin:auto}.topline{height:3px;background:linear-gradient(90deg,var(--orange),var(--blue),var(--orange))}
+header{position:sticky;top:0;z-index:50;background:rgba(6,16,29,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}.nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:25px}.logo{font:900 29px/1 "Barlow Condensed",sans-serif;letter-spacing:1.8px;white-space:nowrap}.logo span{color:var(--orange)}.navlinks{display:flex;align-items:center;gap:23px}.navlinks a{font-size:11px;font-weight:800;letter-spacing:.8px;color:#c6d3df}.navlinks a:hover{color:var(--blue)}.nav-actions{display:flex;align-items:center;gap:12px}.nav-cta,.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:7px;background:var(--orange);color:#101722;font-size:11px;font-weight:900;letter-spacing:.7px;text-transform:uppercase;border:1px solid transparent;transition:.2s;cursor:pointer}.nav-cta:hover,.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}.btn.outline{background:transparent;border-color:rgba(37,186,255,.55);color:#e4f7ff}.menu-btn{display:none;border:1px solid var(--line);background:#0d1b2c;color:white;border-radius:8px;padding:9px 12px;font-size:20px}
+.hero{position:relative;overflow:hidden;padding:86px 0 78px;background:radial-gradient(ellipse at 78% 38%,rgba(37,186,255,.17),transparent 35%),radial-gradient(ellipse at 8% 90%,rgba(255,107,36,.12),transparent 32%),linear-gradient(120deg,#07111f,#0b1c2e 55%,#07111f)}.hero:before{content:"";position:absolute;inset:0;opacity:.18;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(90deg,black,transparent)}.hero-grid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:45px;align-items:center}.eyebrow{display:inline-flex;align-items:center;gap:10px;color:var(--blue);font-size:10px;font-weight:900;letter-spacing:2.2px;text-transform:uppercase}.eyebrow:before{content:"";width:26px;height:2px;background:var(--orange)}h1,h2,h3,p{margin-top:0}h1{font:900 clamp(54px,7.5vw,91px)/.91 "Barlow Condensed",sans-serif;letter-spacing:.4px;margin:18px 0}.orange{color:var(--orange)}.blue{color:var(--blue)}.hero-copy{max-width:590px;color:#b5c5d4;font-size:15px}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:27px}.hero-points{display:flex;gap:20px;flex-wrap:wrap;margin-top:30px;color:#c2d0dd;font-size:10px;font-weight:800;letter-spacing:.6px}.hero-points span:before{content:"✓";color:var(--orange);margin-right:7px}.hero-photo{height:440px;position:relative;border-radius:18px;overflow:hidden;border:1px solid rgba(37,186,255,.28);background:#10243a;box-shadow:0 24px 70px rgba(0,0,0,.28)}.hero-photo img{width:100%;height:100%;object-fit:cover;filter:saturate(.85);opacity:.87}.hero-photo:after{content:"";position:absolute;inset:35% 0 0;background:linear-gradient(transparent,rgba(4,12,22,.8))}.photo-stamp{position:absolute;z-index:2;bottom:20px;left:20px;padding:13px 16px;border:1px solid rgba(255,255,255,.17);border-radius:8px;background:rgba(5,14,25,.78);font-size:10px;font-weight:900;letter-spacing:1.4px}.photo-stamp strong{color:var(--orange)}
+.proof{border-block:1px solid var(--line);background:#081523}.proof-grid{display:grid;grid-template-columns:repeat(4,1fr);padding:18px 0;gap:15px}.proof-item{text-align:center;color:#c1cfdb;font-size:10px;font-weight:900;letter-spacing:1px;text-transform:uppercase}.proof-item b{color:var(--blue);margin-right:7px}
+section{padding:78px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:25px;margin-bottom:30px}.kicker{color:var(--orange);font-size:10px;font-weight:900;letter-spacing:2px;text-transform:uppercase}.section-head h2,.big-heading{font:900 clamp(36px,4.5vw,53px)/.98 "Barlow Condensed",sans-serif;margin:8px 0 0;letter-spacing:.4px}.section-head p{max-width:470px;color:var(--muted);font-size:12px;margin:0}
+.category-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}.category-card{position:relative;min-height:300px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#10243a}.category-card img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover;opacity:.57;transition:.4s}.category-card:hover img{transform:scale(1.05);opacity:.72}.category-card:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(4,12,22,.97),rgba(4,12,22,.04) 85%)}.category-content{position:absolute;z-index:2;bottom:22px;left:22px;right:22px}.category-content small{color:var(--blue);font-size:9px;font-weight:900;letter-spacing:1.6px}.category-content h3{font:800 30px "Barlow Condensed",sans-serif;margin:5px 0}.category-content p{font-size:11px;color:#c2cfdb;margin:0 0 13px;max-width:300px}
+.blogger-tagline{color:var(--orange)!important;font-weight:900;letter-spacing:1.1px;margin:0 0 8px!important}.creator-category-wrap{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:0 0 38px}.creator-category{padding:16px 13px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.025);min-height:125px}.creator-category span{font-size:9px;font-weight:900;color:var(--orange);letter-spacing:1.5px}.creator-category h3{font:800 19px/1.05 "Barlow Condensed",sans-serif;margin:9px 0 6px}.creator-category p{font-size:10px;line-height:1.5;color:var(--muted);margin:0}.blogger{background:linear-gradient(180deg,#081625,#0b1b2d);border-block:1px solid var(--line)}.blogger-top{display:grid;grid-template-columns:1fr .8fr;gap:35px;align-items:center;margin-bottom:38px}.blogger-top h2{font:900 clamp(45px,5.5vw,66px)/.94 "Barlow Condensed",sans-serif;margin:12px 0}.blogger-top p{font-size:13px;color:var(--muted);max-width:610px}.creator-callout{border:1px solid rgba(37,186,255,.28);background:rgba(37,186,255,.06);padding:22px;border-radius:12px;color:#c4d4e2;font-size:11px}.creator-callout strong{display:block;color:var(--blue);font-size:10px;letter-spacing:1.5px;margin-bottom:8px}.kit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}.kit-card{background:var(--panel);border:1px solid var(--line);border-radius:13px;overflow:hidden;transition:.22s}.kit-card:hover{transform:translateY(-4px);border-color:rgba(37,186,255,.45)}.kit-image{height:190px;overflow:hidden;background:#142940}.kit-image img{width:100%;height:100%;object-fit:cover;transition:.35s}.kit-card:hover .kit-image img{transform:scale(1.04)}.kit-body{padding:19px}.tag{font-size:9px;font-weight:900;letter-spacing:1.5px;color:var(--blue);text-transform:uppercase}.kit-body h3{font:800 27px "Barlow Condensed",sans-serif;margin:5px 0}.kit-body p{font-size:11px;color:var(--muted);min-height:54px}.kit-body ul{padding-left:16px;color:#c5d1dc;font-size:10px;line-height:1.9;margin:12px 0 16px}.link-arrow{color:var(--orange);font-size:10px;font-weight:900;letter-spacing:.7px;text-transform:uppercase}.link-arrow:hover{color:var(--blue)}
+.kit-note{margin-top:18px;color:#91a6ba;font-size:10px}
+.catalog{background:#07111f}.toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:22px}.searchbox{flex:1;min-width:220px;position:relative}.searchbox input{width:100%;background:#0d1c2d;border:1px solid var(--line);border-radius:8px;padding:13px 15px;color:white;font-size:12px;outline:none}.searchbox input:focus{border-color:var(--blue)}.filter-list{display:flex;gap:7px;flex-wrap:wrap}.filter-btn{border:1px solid var(--line);background:#0d1c2d;color:#bdcbd8;padding:10px 13px;border-radius:7px;font-size:10px;font-weight:800;cursor:pointer}.filter-btn.active,.filter-btn:hover{background:rgba(255,107,36,.13);border-color:var(--orange);color:#fff}.product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.product-card{background:var(--panel);border:1px solid var(--line);border-radius:13px;overflow:hidden;transition:.2s}.product-card:hover{transform:translateY(-4px);border-color:rgba(37,186,255,.42)}.product-image{height:205px;position:relative;background:#12263c;overflow:hidden}.product-image img{width:100%;height:100%;object-fit:cover;transition:.35s}.product-card:hover .product-image img{transform:scale(1.04)}.product-type{position:absolute;top:13px;left:13px;padding:6px 9px;border-radius:4px;background:rgba(5,14,25,.84);color:var(--blue);font-size:8px;font-weight:900;letter-spacing:1px}.product-info{padding:18px}.product-info h3{font:800 25px "Barlow Condensed",sans-serif;margin:4px 0}.product-info p{font-size:10px;color:var(--muted);min-height:42px;margin-bottom:14px}.product-meta{display:flex;align-items:center;justify-content:space-between;gap:8px}.product-meta span{font-size:9px;color:#93a8bb}.no-results{display:none;padding:25px;border:1px dashed var(--line);border-radius:10px;text-align:center;color:var(--muted);font-size:12px}
+.guides{background:#091827;border-block:1px solid var(--line)}.guide-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}.guide-card{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#0d1d30}.guide-card img{height:165px;width:100%;object-fit:cover}.guide-content{padding:18px}.guide-content small{color:var(--orange);font-size:9px;font-weight:900;letter-spacing:1.3px}.guide-content h3{font:800 24px "Barlow Condensed",sans-serif;margin:5px 0}.guide-content p{font-size:10px;color:var(--muted);margin:0}
+.affiliate-box{margin-top:25px;padding:17px 19px;border-left:3px solid var(--orange);background:rgba(255,107,36,.06);color:#b8c7d5;font-size:10px}.affiliate-box strong{color:#fff}
+.legal{background:#07111f}.legal-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.legal-card{padding:24px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}.legal-card h3{font:800 27px "Barlow Condensed",sans-serif;margin:0 0 10px}.legal-card p,.legal-card li{font-size:10px;color:var(--muted)}.legal-card ul{padding-left:17px}.legal-updated{font-size:9px;color:var(--blue);font-weight:800;letter-spacing:1px;margin-bottom:10px}
+.cta{padding:46px 0;background:linear-gradient(100deg,rgba(255,107,36,.14),rgba(37,186,255,.11));border-block:1px solid var(--line)}.cta-inner{display:flex;justify-content:space-between;align-items:center;gap:25px}.cta h2{font:900 39px "Barlow Condensed",sans-serif;margin:0 0 3px}.cta p{font-size:11px;color:var(--muted);margin:0}
+footer{padding:43px 0 23px;background:#050d17}.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:30px}.footer-grid p,.footer-grid a{font-size:10px;color:var(--muted)}.footer-grid h4{font-size:10px;letter-spacing:1.3px;text-transform:uppercase}.footer-links{display:grid;gap:8px}.footer-links a:hover{color:var(--blue)}.copyright{border-top:1px solid var(--line);margin-top:28px;padding-top:17px;display:flex;justify-content:space-between;gap:12px;color:#71869b;font-size:9px}
+@media(max-width:950px){.navlinks{gap:13px}.navlinks a{font-size:9px}.hero-photo{height:380px}.category-grid{grid-template-columns:repeat(2,1fr)}.category-card:last-child{grid-column:span 2;min-height:250px}.footer-grid{grid-template-columns:1.2fr 1fr 1fr}}
+@media(max-width:700px){.wrap{width:min(var(--max),calc(100% - 30px))}.nav{height:67px}.menu-btn{display:block}.nav-cta{display:none}.navlinks{display:none;position:absolute;top:67px;left:0;right:0;background:#071321;border-bottom:1px solid var(--line);padding:18px 22px 22px;flex-direction:column;align-items:flex-start;gap:17px}.navlinks.open{display:flex}.navlinks a{font-size:11px}.hero{padding:55px 0 48px}.hero-grid,.blogger-top{grid-template-columns:1fr}.hero-photo{height:260px}.proof-grid{grid-template-columns:repeat(2,1fr);row-gap:14px}.section-head{display:block}.section-head p{margin-top:12px}.category-grid,.kit-grid,.product-grid,.guide-grid,.legal-grid{grid-template-columns:1fr}.category-card,.category-card:last-child{grid-column:auto;min-height:265px}.kit-image{height:205px}.product-image{height:220px}section{padding:58px 0}.cta-inner{display:block}.cta .btn{margin-top:17px}.footer-grid{grid-template-columns:1fr 1fr;gap:22px}.copyright{display:block}.copyright span{display:block;margin-top:6px}}
+@media(max-width:420px){h1{font-size:55px}.hero-actions .btn{width:100%}.footer-grid{grid-template-columns:1fr}.filter-list{width:100%}.filter-btn{flex:1}}
+</style>
 </head>
 <body>
-  <header>
-    <div class="container nav">
-      <a class="brand" href="#home">MOTO<span>VANTA</span><small>RIDE SMART. RIDE BETTER.</small></a>
-      <nav class="nav-links" id="navLinks">
-        <a href="#home">Home</a>
-        <a href="#products">Products</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-      </nav>
-      <a class="btn nav-cta" href="#products">Explore Gear</a>
-      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">☰</button>
-    </div>
-  </header>
-
-  <main>
-    <section class="hero" id="home">
-      <div class="container">
-        <div class="hero-content">
-          <div class="eyebrow">Gear up. Go further.</div>
-          <h1>Ride Smart.<br><span>Ride Better.</span></h1>
-          <p>Discover smart, practical motorcycle accessories designed to make every ride more connected, convenient and enjoyable.</p>
-          <div class="hero-actions">
-            <a class="btn" href="#products">Explore Products</a>
-            <a class="btn btn-outline" href="#about">Discover MotoVanta</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="products" id="products">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">Selected riding essentials</div>
-          <h2>Upgrade Your <span>Ride</span></h2>
-          <p>Explore useful riding accessories selected for everyday convenience and a better riding experience.</p>
-        </div>
-        <div class="product-grid">
-          <article class="product-card">
-            <div class="product-image">
-              <img src="https://www.kaedear.com/cdn/shop/files/m27-pa-black.jpg?v=1726141540&width=1200" alt="Premium black motorcycle phone holder" loading="lazy">
-            </div>
-            <div class="product-info">
-              <h3>Motorcycle Phone Holders</h3>
-              <p>Keep your phone securely mounted and navigation easy to view while riding.</p>
-              <a class="product-link" href="#contact">Explore holders →</a>
-            </div>
-          </article>
-          <article class="product-card">
-            <div class="product-image">
-              <img src="https://www.kaedear.com/cdn/shop/files/KDR-B13_top.jpg?v=1776833221&width=1200" alt="Motorcycle USB charging accessory" loading="lazy">
-            </div>
-            <div class="product-info">
-              <h3>USB Motorcycle Chargers</h3>
-              <p>Convenient charging accessories to help keep your devices powered on the road.</p>
-              <a class="product-link" href="#contact">Explore chargers →</a>
-            </div>
-          </article>
-          <article class="product-card">
-            <div class="product-image">
-              <img src="https://es.midlandeurope.com/media/cache/product_gallery/99/36/a6191b5358f18f4c2eb61a7fc4bf.jpg" alt="Premium motorcycle Bluetooth helmet intercom" loading="lazy">
-            </div>
-            <div class="product-info">
-              <h3>Bluetooth Helmet Intercoms</h3>
-              <p>Explore hands-free communication options for compatible helmets and devices.</p>
-              <a class="product-link" href="#contact">Explore intercoms →</a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <div class="feature-strip">
-      <div class="container features">
-        <div class="feature"><div class="feature-icon">✦</div><strong>Rider-Focused Picks</strong><span>Useful accessories for real rides</span></div>
-        <div class="feature"><div class="feature-icon">⌁</div><strong>Smart Convenience</strong><span>Make everyday riding easier</span></div>
-        <div class="feature"><div class="feature-icon">◎</div><strong>Explore With Confidence</strong><span>Check details before you choose</span></div>
-      </div>
-    </div>
-
-    <section id="about">
-      <div class="container about-grid">
-        <div class="about-photo" role="img" aria-label="Motorcycle on an open road"></div>
-        <div class="about-copy">
-          <div class="eyebrow">The MotoVanta mindset</div>
-          <h2>Built Around the <span>Ride.</span></h2>
-          <p>MotoVanta is a motorcycle accessories discovery brand for riders who value smart gear, practical design and a better riding experience.</p>
-          <p>Our goal is to make it easier to explore useful accessories, compare options and find gear that suits your riding needs.</p>
-          <a class="btn btn-outline" href="#products">Find Your Gear</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="cta" id="contact">
-      <div class="container">
-        <div class="eyebrow">Your next ride starts here</div>
-        <h2>Make Every Ride <span style="color:var(--orange)">Smarter.</span></h2>
-        <p>Have a product question or a suggestion for gear we should feature? Get in touch with MotoVanta.</p>
-        <a class="btn" href="mailto:hello@motovanta.com?subject=MotoVanta%20Product%20Enquiry">Contact MotoVanta</a>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container footer-row">
-      <a class="brand" href="#home">MOTO<span>VANTA</span><small>RIDE SMART. RIDE BETTER.</small></a>
-      <div class="footer-links">
-        <a href="#home">Home</a><a href="#products">Products</a><a href="#about">About</a><a href="#contact">Contact</a>
-      </div>
-      <p>© <span id="year"></span> MotoVanta. All rights reserved.</p>
-    </div>
-    <div class="container affiliate-disclosure">
-      <strong>Affiliate Disclosure:</strong>
-      Some links on MotoVanta may be affiliate links. If you make a purchase through an affiliate link,
-      we may earn a commission at no additional cost to you. We will clearly identify affiliate links
-      when they are added. Product prices, availability, shipping and seller terms may change.
-    </div>
-  </footer>
-
-  <script>
-    const menuBtn = document.getElementById('menuBtn');
-    const navLinks = document.getElementById('navLinks');
-    menuBtn.addEventListener('click', () => {
-      const isOpen = navLinks.classList.toggle('open');
-      menuBtn.setAttribute('aria-expanded', String(isOpen));
-      menuBtn.textContent = isOpen ? '✕' : '☰';
-    });
-    navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('open');
-        menuBtn.setAttribute('aria-expanded', 'false');
-        menuBtn.textContent = '☰';
-      });
-    });
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+<div class="topline"></div>
+<header>
+ <div class="wrap nav">
+  <a class="logo" href="#home">MOTO<span>VANTA</span></a>
+  <nav class="navlinks" id="navlinks">
+   <a href="#categories">CATEGORIES</a><a href="#blogger">MOTOVANTA BLOGGER</a><a href="#products">SHOP GEAR</a><a href="#guides">RIDER GUIDES</a>
+  </nav>
+  <div class="nav-actions"><a class="nav-cta" href="#products">Explore Store</a><button class="menu-btn" id="menuBtn" aria-label="Toggle menu" aria-expanded="false">☰</button></div>
+ </div>
+</header>
+<main id="home">
+<section class="hero">
+ <div class="wrap hero-grid">
+  <div>
+   <div class="eyebrow">Premium gear for the modern rider</div>
+   <h1>RIDE SMART.<br><span class="orange">RIDE BETTER.</span></h1>
+   <p class="hero-copy">The gear you need for the road and the tools to capture every moment. Explore curated motorcycle accessories, moto vlogging kits and practical guides — all in one place.</p>
+   <div class="hero-actions"><a class="btn" href="#categories">Explore Collections</a><a class="btn outline" href="#blogger">Discover Blogger Gear</a></div>
+   <div class="hero-points"><span>Curated product picks</span><span>Rider-first guides</span><span>Creator setups</span></div>
+  </div>
+  <div class="hero-photo">
+   <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=1400&q=90" alt="Motorcycle ready for an open-road adventure">
+   <div class="photo-stamp">ENGINEERED FOR THE JOURNEY <strong> / MV</strong></div>
+  </div>
+ </div>
+</section>
+<div class="proof"><div class="wrap proof-grid"><div class="proof-item"><b>01</b> Riding Essentials</div><div class="proof-item"><b>02</b> Creator Gear</div><div class="proof-item"><b>03</b> Buying Guides</div><div class="proof-item"><b>04</b> Global Inspiration</div></div></div>
+<section id="categories">
+ <div class="wrap">
+  <div class="section-head"><div><div class="kicker">Explore MotoVanta</div><h2>THREE WAYS TO UPGRADE</h2></div><p>Find the right gear for your ride, your filming setup and your everyday motorcycle lifestyle.</p></div>
+  <div class="category-grid">
+   <article class="category-card"><img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=900&q=85" alt="Motorcycle on a scenic road"><div class="category-content"><small>01 / ON THE ROAD</small><h3>Riding Accessories</h3><p>Phone mounts, charging, storage and useful everyday upgrades.</p><a class="link-arrow" href="#products" data-filter-link="riding">Explore riding gear →</a></div></article>
+   <article class="category-card"><img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=900&q=85" alt="Camera and photography equipment"><div class="category-content"><small>02 / BEHIND THE LENS</small><h3>Moto Vlogging Gear</h3><p>Action cameras, audio, mounts and creator essentials.</p><a class="link-arrow" href="#products" data-filter-link="creator">Explore creator gear →</a></div></article>
+   <article class="category-card"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=85" alt="Open landscape adventure"><div class="category-content"><small>03 / KNOW BEFORE YOU GO</small><h3>Rider Guides</h3><p>Practical advice to help you choose and use your equipment.</p><a class="link-arrow" href="#guides">Read the guides →</a></div></article>
+  </div>
+ </div>
+</section>
+<section class="blogger" id="blogger">
+ <div class="wrap">
+  <div class="blogger-top">
+   <div><div class="kicker">MOTOVANTA BLOGGER — THE MOTO CREATOR HUB</div><h2>YOUR RIDE.<br><span class="orange">YOUR STORY.</span></h2><p class="blogger-tagline">Your Ride. Your Story. Your Creation.</p><p>ক্যামেরা থেকে মাইক্রোফোন, হেলমেট মাউন্ট থেকে প্রফেশনাল Creator Accessories—নতুন ও অভিজ্ঞ Moto Vlogger-দের জন্য প্রয়োজনীয় গিয়ার, স্মার্ট সেটআপ এবং সম্পূর্ণ গাইডলাইন এক জায়গায়।</p><div class="hero-actions"><a class="btn" href="#kits">Find Your Creator Kit</a><a class="btn outline" href="#creator-categories">Explore Creator Gear</a></div></div>
+   <aside class="creator-callout"><strong>How curated kits work</strong>Our kits are recommendation lists, not physical bundles sold by MotoVanta. Each item may be purchased separately from its retailer. Always verify camera, helmet, mount, microphone and device compatibility before ordering.</aside>
+  </div>
+  <div class="creator-category-wrap" id="creator-categories">
+   <div class="creator-category"><span>01</span><h3>Camera &amp; Video Gear</h3><p>Action cameras, 360° cameras and video essentials</p></div>
+   <div class="creator-category"><span>02</span><h3>Audio &amp; Microphones</h3><p>Wireless microphones and wind-noise protection</p></div>
+   <div class="creator-category"><span>03</span><h3>Helmet &amp; Camera Mounts</h3><p>Helmet mounts, adapters and mounting accessories</p></div>
+   <div class="creator-category"><span>04</span><h3>Creator Packages</h3><p>Beginner, Professional and Mobile Vlogging Kits</p></div>
+   <div class="creator-category"><span>05</span><h3>Creator Guides</h3><p>Setup, compatibility, buying guides and practical tips</p></div>
+  </div>
+  <div class="section-head" id="kits"><div><div class="kicker">Choose your creator level</div><h2>MOTOVANTA BLOGGER KITS</h2></div><p>Start simple. Add equipment as your filming style, experience and channel grow.</p></div>
+  <div class="kit-grid">
+   <article class="kit-card"><div class="kit-image"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=85" alt="Outdoor travel scenery for beginner vlogging"></div><div class="kit-body"><span class="tag">Start your journey</span><h3>Beginner Moto Vlogger</h3><p>A practical entry-level checklist for recording your rides without overspending.</p><ul><li>Action camera</li><li>Helmet-compatible camera mount</li><li>Microphone suitable for your camera</li><li>Memory card and spare battery</li><li>Compact mini tripod</li></ul><a class="link-arrow" href="#products" data-filter-link="creator">Explore creator products →</a></div></article>
+   <article class="kit-card"><div class="kit-image"><img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=900&q=85" alt="Professional camera equipment"></div><div class="kit-body"><span class="tag">Level up your content</span><h3>Professional Creator</h3><p>A more advanced setup for creators who need stronger video, audio and backup options.</p><ul><li>Premium action camera</li><li>Optional 360° camera</li><li>Wireless microphone system</li><li>Verified mounts and adapters</li><li>High-speed cards and batteries</li></ul><a class="link-arrow" href="#products" data-filter-link="creator">Explore creator products →</a></div></article>
+   <article class="kit-card"><div class="kit-image"><img src="https://images.unsplash.com/photo-1512499617640-c74ae3a79d37?auto=format&fit=crop&w=900&q=85" alt="Smartphone ready for mobile content creation"></div><div class="kit-body"><span class="tag">Light and portable</span><h3>Mobile Vlogging Kit</h3><p>For creators who want to start filming and editing with a smartphone.</p><ul><li>Smartphone grip or mount</li><li>Compatible wireless microphone</li><li>Mini tripod or handle</li><li>Portable power bank</li><li>Storage and editing apps</li></ul><a class="link-arrow" href="#products" data-filter-link="creator">Explore creator products →</a></div></article>
+  </div>
+  <p class="kit-note">Note: Product recommendations, availability and compatibility will be checked before affiliate links are published.</p>
+ </div>
+</section>
+<section class="catalog" id="products">
+ <div class="wrap">
+  <div class="section-head"><div><div class="kicker">The MotoVanta edit</div><h2>FEATURED GEAR</h2></div><p>Search the collection or filter by category to find the products and creator essentials you want to explore.</p></div>
+  <div class="toolbar">
+   <div class="searchbox"><input type="search" id="productSearch" placeholder="Search products — e.g. camera, phone mount..." aria-label="Search products"></div>
+   <div class="filter-list" id="filterList"><button class="filter-btn active" data-filter="all">All Gear</button><button class="filter-btn" data-filter="riding">Riding Gear</button><button class="filter-btn" data-filter="creator">Creator Gear</button></div>
+  </div>
+  <div class="product-grid" id="productGrid">
+   <article class="product-card" data-category="riding" data-search="motorcycle phone holder mount navigation handlebar">
+    <div class="product-image"><img src="https://www.kaedear.com/cdn/shop/files/m27-pa-black.jpg?v=1726141540&width=1200" alt="Motorcycle handlebar phone holder"><span class="product-type">RIDING ACCESSORY</span></div><div class="product-info"><span class="tag">Navigation & mounts</span><h3>Motorcycle Phone Holder</h3><p>A practical mounting option for navigation. Check handlebar fit and secure installation.</p><div class="product-meta"><span>Riding Gear</span><a class="link-arrow" href="#affiliate">Details soon ↗</a></div></div>
+   </article>
+   <article class="product-card" data-category="riding" data-search="motorcycle usb charger power charging">
+    <div class="product-image"><img src="https://www.kaedear.com/cdn/shop/files/KDR-B13_top.jpg?v=1776833221&width=1200" alt="Motorcycle USB charging accessory"><span class="product-type">POWER & CHARGING</span></div><div class="product-info"><span class="tag">Power essentials</span><h3>USB Motorcycle Charger</h3><p>Explore charging options and confirm electrical compatibility with your motorcycle.</p><div class="product-meta"><span>Riding Gear</span><a class="link-arrow" href="#affiliate">Details soon ↗</a></div></div>
+   </article>
+   <article class="product-card" data-category="riding" data-search="bluetooth intercom helmet communication rider">
+    <div class="product-image"><img src="https://es.midlandeurope.com/media/cache/product_gallery/99/36/a6191b5358f18f4c2eb61a7fc4bf.jpg" alt="Motorcycle Bluetooth intercom device"><span class="product-type">RIDER COMMUNICATION</span></div><div class="product-info"><span class="tag">Stay connected</span><h3>Bluetooth Intercom</h3><p>Compare rider communication systems and check helmet fit and device compatibility.</p><div class="product-meta"><span>Riding Gear</span><a class="link-arrow" href="#affiliate">Details soon ↗</a></div></div>
+   </article>
+   <article class="product-card" data-category="creator" data-search="action camera moto vlogging video recording">
+    <div class="product-image"><img src="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?auto=format&fit=crop&w=900&q=85" alt="Action camera for recording motorcycle rides"><span class="product-type">VIDEO & CAMERA</span></div><div class="product-info"><span class="tag">Capture the ride</span><h3>Action Camera</h3><p>Compare image stabilization, battery life, weather resistance and mounting options.</p><div class="product-meta"><span>Creator Gear</span><a class="link-arrow" href="#affiliate">Details soon ↗</a></div></div>
+   </article>
+   <article class="product-card" data-category="creator" data-search="wireless microphone audio sound vlogging">
+    <div class="product-image"><img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=900&q=85" alt="Audio recording microphone equipment"><span class="product-type">AUDIO & SOUND</span></div><div class="product-info"><span class="tag">Clearer audio</span><h3>Wireless Microphone</h3><p>Look for camera or phone compatibility, wind protection and suitable audio connections.</p><div class="product-meta"><span>Creator Gear</span><a class="link-arrow" href="#affiliate">Details soon ↗</a></div></div>
+   </article>
+   <article class="product-card" data-category="creator" data-search="helmet camera mount action camera accessories">
+    <div class="product-image"><img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=900&q=85" alt="Motorcycle and riding equipment"><span class="product-type">MOUNTING ACCESSORIES</span></div><div class="product-info"><span class="tag">Mount it right</span><h3>Camera Mount System</h3><p>Choose mounts specifically approved for your camera and helmet; inspect fit and security.</p><div class="product-meta"><span>Creator Gear</span><a class="link-arrow" href="#affiliate">Details soon ↗</a></div></div>
+   </article>
+  </div>
+  <div class="no-results" id="noResults">No matching products found. Try another search or choose a different category.</div>
+  <div class="affiliate-box" id="affiliate"><strong>Affiliate notice:</strong> Some links on this preview are placeholders and are not affiliate tracking links. Product links and commission disclosures will be updated after the relevant affiliate program approves the account.</div>
+ </div>
+</section>
+<section class="guides" id="guides">
+ <div class="wrap">
+  <div class="section-head"><div><div class="kicker">Knowledge for the journey</div><h2>RIDER & CREATOR GUIDES</h2></div><p>Useful information to help you make smarter gear decisions before you hit the road.</p></div>
+  <div class="guide-grid">
+   <article class="guide-card"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=85" alt="Scenic open road travel"><div class="guide-content"><small>START HERE / BEGINNER</small><h3>How to Start Moto Vlogging</h3><p>A beginner checklist for choosing a camera, microphone, storage and essential accessories.</p></div></article>
+   <article class="guide-card"><img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=900&q=85" alt="Camera gear for content creation"><div class="guide-content"><small>CAMERA / COMPARISON</small><h3>Action Camera vs 360° Camera</h3><p>Understand the strengths of each camera type and decide what suits your content.</p></div></article>
+   <article class="guide-card"><img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=900&q=85" alt="Microphone and audio recording gear"><div class="guide-content"><small>AUDIO / HOW-TO</small><h3>Getting Better Audio on the Road</h3><p>Explore wind noise, microphone placement and device compatibility basics.</p></div></article>
+  </div>
+ </div>
+</section>
+<section class="legal" id="policies">
+ <div class="wrap">
+  <div class="section-head"><div><div class="kicker">Transparency matters</div><h2>POLICIES & INFORMATION</h2></div><p>Starter policy text for this website preview. Review and customize it to match your business, location, analytics and affiliate partners before launch.</p></div>
+  <div class="legal-grid">
+   <article class="legal-card" id="privacy"><div class="legal-updated">PRIVACY POLICY / STARTER PAGE</div><h3>Privacy Policy</h3>
+    <p><strong>Last updated: November 2026</strong></p>
+    <p>MotoVanta respects your privacy. This starter policy explains the general types of information that may be processed when you visit this website. It must be customized before public launch.</p>
+    <p><strong>Information you provide:</strong> If you contact us by email or submit a form (if enabled), we may receive the information you choose to provide, such as your name, email address and message.</p>
+    <p><strong>Basic technical data:</strong> Hosting providers and security services may process technical information such as IP address, browser type, device information and request logs to operate and protect the website.</p>
+    <p><strong>Cookies and analytics:</strong> This website may use essential cookies or analytics tools in the future. If these are enabled, this policy should identify the providers, purposes, retention periods and consent choices where required.</p>
+    <p><strong>Affiliate links:</strong> When you follow a retailer link, you leave MotoVanta and are subject to that retailer's privacy policy. Affiliate partners may use cookies or similar technologies to attribute qualifying purchases.</p>
+    <p><strong>Your choices:</strong> You may contact the website operator to ask about personal information you have submitted. Applicable privacy rights depend on your location and the laws that apply.</p>
+    <p><strong>Contact:</strong> Add your verified business contact email and operator details here before publishing.</p>
+   </article>
+   <article class="legal-card" id="terms"><div class="legal-updated">TERMS OF USE / STARTER PAGE</div><h3>Terms of Use</h3>
+    <p><strong>Last updated: November 2026</strong></p>
+    <p>By using MotoVanta, you agree to use this website lawfully and understand the following terms. Customize these terms and obtain appropriate legal review for your business before launch.</p>
+    <p><strong>Informational content:</strong> Product descriptions, guides and recommendations are provided for general information only. Specifications, availability, prices and retailer terms can change; verify details with the seller or manufacturer before purchasing.</p>
+    <p><strong>Third-party retailers:</strong> MotoVanta does not sell or ship products through this preview. Purchases made on third-party websites are governed by those websites' own terms, warranties, returns and privacy policies.</p>
+    <p><strong>Affiliate relationships:</strong> MotoVanta may receive a commission from qualifying purchases through clearly identified affiliate links, at no additional cost to you. Not every product reference is an affiliate link.</p>
+    <p><strong>Safety and compatibility:</strong> Riders are responsible for checking fitment, manufacturer instructions and local laws. Never use a mount or accessory that interferes with safe vehicle operation. Follow helmet and camera manufacturers' guidance.</p>
+    <p><strong>Intellectual property:</strong> Website text, branding and original design elements may not be copied or reused without permission. Third-party product images and trademarks remain the property of their respective owners.</p>
+    <p><strong>Changes and contact:</strong> We may update website content and these terms. Add verified operator details and a contact email here before launch.</p>
+   </article>
+  </div>
+ </div>
+</section>
+<div class="cta"><div class="wrap cta-inner"><div><h2>MAKE EVERY RIDE A STORY.</h2><p>Discover the gear. Build your setup. Share your journey.</p></div><a class="btn" href="#blogger">Explore MotoVanta Blogger</a></div></div>
+</main>
+<footer>
+ <div class="wrap">
+  <div class="footer-grid">
+   <div><a class="logo" href="#home">MOTO<span>VANTA</span></a><p>Ride Smart. Ride Better.<br>Premium motorcycle gear, creator essentials and rider-first guides.</p></div>
+   <div><h4>Collections</h4><div class="footer-links"><a href="#categories">Riding Accessories</a><a href="#blogger">MotoVanta Blogger</a><a href="#kits">Creator Kits</a><a href="#products">Featured Gear</a></div></div>
+   <div><h4>Discover</h4><div class="footer-links"><a href="#guides">Rider Guides</a><a href="#products">Product Search</a><a href="#affiliate">Affiliate Disclosure</a></div></div>
+   <div><h4>Legal</h4><div class="footer-links"><a href="#privacy">Privacy Policy</a><a href="#terms">Terms of Use</a><a href="mailto:hello@motovanta.com">Contact (replace before launch)</a></div></div>
+  </div>
+  <div class="copyright"><span>© <span id="year"></span> MotoVanta. All rights reserved.</span><span>Independent product recommendations. Verify product fitment and specifications before purchase.</span></div>
+ </div>
+</footer>
+<script>
+const menuBtn=document.getElementById('menuBtn');
+const nav=document.getElementById('navlinks');
+menuBtn.addEventListener('click',()=>{const open=nav.classList.toggle('open');menuBtn.setAttribute('aria-expanded',String(open));menuBtn.textContent=open?'✕':'☰';});
+nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');menuBtn.textContent='☰';}));
+document.getElementById('year').textContent=new Date().getFullYear();
+const search=document.getElementById('productSearch');
+const filterButtons=[...document.querySelectorAll('.filter-btn')];
+const cards=[...document.querySelectorAll('.product-card')];
+const noResults=document.getElementById('noResults');
+let activeFilter='all';
+function updateProducts(){
+ const q=search.value.trim().toLowerCase();let shown=0;
+ cards.forEach(card=>{const categoryMatch=activeFilter==='all'||card.dataset.category===activeFilter;const textMatch=(card.dataset.search+' '+card.innerText).toLowerCase().includes(q);const visible=categoryMatch&&textMatch;card.style.display=visible?'':'none';if(visible)shown++;});
+ noResults.style.display=shown?'none':'block';
+}
+filterButtons.forEach(btn=>btn.addEventListener('click',()=>{activeFilter=btn.dataset.filter;filterButtons.forEach(b=>b.classList.toggle('active',b===btn));updateProducts();}));
+search.addEventListener('input',updateProducts);
+document.querySelectorAll('[data-filter-link]').forEach(link=>link.addEventListener('click',()=>{activeFilter=link.dataset.filterLink;filterButtons.forEach(b=>b.classList.toggle('active',b.dataset.filter===activeFilter));updateProducts();}));
+</script>
 </body>
 </html>
