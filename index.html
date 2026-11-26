@@ -111,6 +111,15 @@
     footer { padding: 36px 0; background:#04111d; border-top:1px solid rgba(0,191,255,.2); box-shadow:0 -4px 30px rgba(0,191,255,.06); }
     .footer-row { display:flex; justify-content:space-between; gap:20px; align-items:center; flex-wrap:wrap; }
     footer p, footer a { color:var(--muted); font-size:.85rem; }
+    .affiliate-disclosure {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(0,191,255,.12);
+      color: var(--muted);
+      font-size: .82rem;
+      line-height: 1.7;
+    }
+    .affiliate-disclosure strong { color: var(--orange); }
     .footer-links { display:flex; gap:20px; flex-wrap:wrap; }
     .footer-links a:hover { color:var(--orange); }
     @media(max-width:800px) {
@@ -243,6 +252,12 @@
         <a href="#home">Home</a><a href="#products">Products</a><a href="#about">About</a><a href="#contact">Contact</a>
       </div>
       <p>© <span id="year"></span> MotoVanta. All rights reserved.</p>
+    </div>
+    <div class="container affiliate-disclosure">
+      <strong>Affiliate Disclosure:</strong>
+      Some links on MotoVanta may be affiliate links. If you make a purchase through an affiliate link,
+      we may earn a commission at no additional cost to you. We will clearly identify affiliate links
+      when they are added. Product prices, availability, shipping and seller terms may change.
     </div>
   </footer>
 
