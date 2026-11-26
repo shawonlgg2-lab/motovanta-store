@@ -1,388 +1,267 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="MotoVanta - Premium Motorcycle Gadgets and Accessories. Ride Smart. Ride Better.">
-<title>MotoVanta | Ride Smart. Ride Better.</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-<style>
-:root {
-  --navy:#061827;
-  --navy2:#0B2235;
-  --orange:#F36B16;
-  --white:#FFFFFF;
-  --muted:#B8C4CE;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  background:var(--navy);
-  color:var(--white);
-  font-family:'Inter',Arial,sans-serif;
-}
-a{text-decoration:none;color:inherit}
-img{display:block;width:100%;object-fit:cover}
-.container{width:min(1200px,92%);margin:auto}
-
-/* HEADER */
-header{
-  background:#041321;
-  border-bottom:1px solid #26394A;
-  position:sticky;top:0;z-index:100;
-}
-.navbar{
-  min-height:78px;
-  display:flex;align-items:center;
-  justify-content:space-between;gap:20px;
-}
-.logo{font-size:29px;font-weight:900;font-style:italic}
-.logo span{color:var(--orange)}
-.tagline{font-size:11px;color:#D0D9E0;letter-spacing:1px}
-.logo-wrap{display:flex;align-items:center;gap:10px}
-.logo-icon{font-size:37px;color:var(--orange)}
-nav{display:flex;align-items:center;gap:28px}
-nav a{font-size:14px;font-weight:600;color:#E5EAF0}
-nav a:hover{color:var(--orange)}
-.menu-btn{
-  display:none;background:none;color:white;
-  border:1px solid #526273;padding:9px 13px;
-  border-radius:5px;font-size:20px;
-}
-
-/* HERO */
-.hero{
-  min-height:470px;
-  display:flex;align-items:center;
-  background:
-  linear-gradient(90deg,rgba(3,17,30,.95) 0%,rgba(3,17,30,.70) 42%,rgba(3,17,30,.08) 100%),
-  url('https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=2000&q=90') center 55%/cover;
-}
-.hero-content{padding:80px 0;max-width:650px}
-.orange-mark{
-  width:85px;height:9px;background:var(--orange);
-  transform:skewX(-30deg);margin-bottom:24px;
-}
-.hero h1{
-  font-size:clamp(42px,7vw,76px);
-  font-weight:900;line-height:1.05;
-  font-style:italic;letter-spacing:-2px;
-}
-.hero h1 span{color:var(--orange)}
-.hero p{
-  font-size:19px;color:#E0E6EC;
-  line-height:1.6;margin:20px 0 28px;
-  max-width:520px;
-}
-.btn{
-  display:inline-block;background:var(--orange);
-  color:white;padding:15px 27px;
-  border-radius:30px;font-weight:800;
-  transition:.25s;
-}
-.btn:hover{background:#D9560B;transform:translateY(-2px)}
-
-/* SECTION */
-.section{padding:65px 0}
-.section-heading{text-align:center;margin-bottom:35px}
-.section-heading h2{font-size:clamp(27px,4vw,38px);font-style:italic}
-.section-heading p{color:var(--muted);margin-top:8px}
-.heading-line{
-  height:4px;width:120px;background:var(--orange);
-  display:inline-block;vertical-align:middle;margin:0 18px 9px;
-}
-
-/* CATEGORY CARDS */
-.products{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
-}
-.product{
-  border:1px solid #526273;border-radius:13px;
-  overflow:hidden;background:#0A2032;
-  transition:.3s;
-}
-.product:hover{transform:translateY(-6px);border-color:var(--orange)}
-.product-img{height:210px;position:relative}
-.product-img img{height:100%}
-.product-info{padding:20px}
-.product h3{font-size:19px;margin-bottom:9px}
-.product p{font-size:14px;color:#C1CDD6;line-height:1.6;min-height:45px}
-.product-link{
-  display:inline-block;color:var(--orange);
-  font-weight:800;margin-top:14px;font-size:14px;
-}
-
-/* ABOUT */
-.about{
-  background:#0B2235;
-  display:grid;grid-template-columns:1fr 1fr;
-  align-items:center;overflow:hidden;
-}
-.about-content{padding:55px 8%}
-.about-content h2{font-size:38px;font-style:italic;margin-bottom:16px}
-.about-content h2 span{color:var(--orange)}
-.about-content p{color:#D1D9E0;line-height:1.8;margin-bottom:13px}
-.about-image{height:390px}
-.about-image img{height:100%}
-
-/* FEATURES */
-.features{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  border-top:1px solid #526273;
-  border-bottom:1px solid #526273;
-  padding:25px 0;gap:15px;
-}
-.feature{display:flex;align-items:center;gap:13px;justify-content:center}
-.feature-icon{font-size:29px;color:var(--orange)}
-.feature strong{display:block;font-size:13px}
-.feature small{color:#AEBCC8;font-size:12px}
-
-/* FOOTER */
-footer{background:#041321;padding:45px 0 20px}
-.footer-grid{
-  display:grid;grid-template-columns:1.2fr 1fr 1fr;
-  gap:40px;padding-bottom:35px;
-}
-.footer-title{font-size:18px;margin-bottom:16px}
-.footer-text{font-size:13px;color:#B8C4CE;line-height:1.8}
-.footer-links{display:grid;gap:11px}
-.footer-links a{font-size:13px;color:#C8D2DB}
-.footer-links a:hover{color:var(--orange)}
-.socials{display:flex;gap:10px;margin-top:20px}
-.socials a{
-  width:35px;height:35px;border-radius:50%;
-  background:#19354A;display:grid;place-items:center;
-  font-size:13px;font-weight:800;
-}
-.socials a:hover{background:var(--orange)}
-.email-form{display:flex;margin-top:15px}
-.email-form input{
-  width:100%;min-width:0;padding:13px;
-  background:#152C40;border:1px solid #637487;
-  color:white;border-radius:7px 0 0 7px;
-}
-.email-form button{
-  background:var(--orange);border:0;
-  color:white;padding:0 17px;font-weight:800;
-  border-radius:0 7px 7px 0;
-}
-.copyright{
-  border-top:1px solid #31475A;padding-top:20px;
-  display:flex;justify-content:space-between;
-  gap:15px;flex-wrap:wrap;
-  color:#B8C4CE;font-size:12px;
-}
-
-/* MOBILE */
-@media(max-width:800px){
-  .navbar{min-height:70px}
-  nav{gap:15px}
-  nav a{font-size:12px}
-  .products{grid-template-columns:repeat(2,1fr)}
-  .about-content{padding:35px 6%}
-  .about-content h2{font-size:30px}
-  .features{grid-template-columns:repeat(2,1fr)}
-  .footer-grid{grid-template-columns:1fr 1fr}
-}
-@media(max-width:560px){
-  .navbar{flex-wrap:wrap;padding:12px 0}
-  .logo{font-size:24px}
-  .logo-icon{font-size:29px}
-  .menu-btn{display:block}
-  nav{display:none;width:100%;padding:10px 0 15px;flex-direction:column;align-items:flex-start}
-  nav.show{display:flex}
-  nav a{font-size:14px}
-  .hero{min-height:490px;background-position:58% center}
-  .hero-content{padding:65px 0}
-  .hero h1{font-size:48px}
-  .hero p{font-size:16px}
-  .products{grid-template-columns:1fr}
-  .product-img{height:230px}
-  .heading-line{width:35px;margin:0 8px 8px}
-  .about{grid-template-columns:1fr}
-  .about-image{height:250px;grid-row:1}
-  .about-content{padding:35px 6%}
-  .features{grid-template-columns:1fr 1fr}
-  .feature{justify-content:flex-start}
-  .feature-icon{font-size:24px}
-  .feature strong{font-size:11px}
-  .feature small{font-size:10px}
-  .footer-grid{grid-template-columns:1fr;gap:28px}
-  .copyright{flex-direction:column}
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071827">
+  <meta name="description" content="MotoVanta — premium motorcycle accessories to help you ride smarter and better.">
+  <title>MotoVanta | Ride Smart. Ride Better.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #071827;
+      --navy-2: #0b2235;
+      --panel: #0d263a;
+      --orange: #ff6a00;
+      --blue: #00bfff;
+      --white: #f4f8fc;
+      --muted: #a9bac8;
+      --line: rgba(0,191,255,.22);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, Arial, sans-serif;
+      color: var(--white);
+      background:
+        radial-gradient(ellipse at 8% 12%, rgba(0,191,255,.10), transparent 32%),
+        radial-gradient(ellipse at 92% 42%, rgba(255,106,0,.07), transparent 30%),
+        var(--navy);
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1160px, 90%); margin: auto; }
+    header {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(5,18,30,.90); backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0,191,255,.16);
+      box-shadow: 0 4px 28px rgba(0,191,255,.08);
+    }
+    .nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { font-size: 1.55rem; font-weight: 900; letter-spacing: 1.5px; }
+    .brand span { color: var(--orange); }
+    .brand small { display: block; font-size: .58rem; color: var(--muted); letter-spacing: 2.3px; font-weight: 600; margin-top: -5px; }
+    .nav-links { display: flex; gap: 30px; align-items: center; color: #d6e1e9; font-size: .9rem; }
+    .nav-links a:hover { color: var(--blue); }
+    .menu-btn { display: none; border: 1px solid var(--line); color: white; background: transparent; padding: 8px 12px; border-radius: 8px; font-size: 1.1rem; }
+    .btn {
+      display: inline-flex; justify-content: center; align-items: center;
+      padding: 13px 23px; border-radius: 8px; background: var(--orange);
+      color: #101820; font-weight: 800; border: 1px solid var(--orange);
+      box-shadow: 0 0 17px rgba(255,106,0,.32); transition: .25s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 0 28px rgba(255,106,0,.62); }
+    .btn-outline { background: transparent; color: white; border-color: rgba(0,191,255,.55); box-shadow: 0 0 18px rgba(0,191,255,.10); }
+    .btn-outline:hover { background: rgba(0,191,255,.10); box-shadow: 0 0 24px rgba(0,191,255,.25); }
+    .hero {
+      min-height: 650px; display: flex; align-items: center; position: relative; overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(4,16,28,.96) 0%, rgba(4,16,28,.78) 48%, rgba(4,16,28,.28) 100%),
+        linear-gradient(0deg, rgba(4,16,28,.50), rgba(4,16,28,.10)),
+        url("https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=2000&q=90") center 55%/cover;
+      box-shadow: inset 0 0 110px rgba(0,191,255,.12);
+    }
+    .hero::after { content:""; position:absolute; width:380px; height:380px; border-radius:50%; right:-120px; top:12%; border:1px solid rgba(0,191,255,.25); box-shadow:0 0 70px rgba(0,191,255,.12), inset 0 0 60px rgba(0,191,255,.08); }
+    .hero-content { position: relative; z-index: 1; max-width: 680px; padding: 95px 0; }
+    .eyebrow { color: var(--blue); text-transform: uppercase; letter-spacing: 3px; font-size: .75rem; font-weight: 800; margin-bottom: 18px; }
+    h1 { font-size: clamp(2.7rem, 7vw, 5.4rem); line-height: 1.04; letter-spacing: -2.5px; margin-bottom: 22px; font-weight: 900; }
+    h1 span { color: var(--orange); text-shadow: 0 0 25px rgba(255,106,0,.25); }
+    .hero p { max-width: 540px; color: #d0dce5; font-size: 1.08rem; margin-bottom: 30px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 13px; }
+    section { padding: 88px 0; }
+    .section-head { text-align: center; max-width: 700px; margin: 0 auto 42px; }
+    .section-head h2 { font-size: clamp(2rem,4vw,3rem); line-height: 1.15; margin-bottom: 13px; }
+    .section-head h2 span { color: var(--orange); }
+    .section-head p { color: var(--muted); }
+    .products { background: linear-gradient(180deg, rgba(11,34,53,.45), rgba(7,24,39,.25)); }
+    .product-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 23px; }
+    .product-card {
+      background: linear-gradient(145deg, rgba(16,43,63,.96), rgba(7,24,39,.98));
+      border: 1px solid rgba(0,191,255,.28); border-radius: 16px; overflow: hidden;
+      box-shadow: 0 12px 35px rgba(0,0,0,.24), 0 0 18px rgba(0,191,255,.06);
+      transition: .28s;
+    }
+    .product-card:hover { transform: translateY(-7px); border-color: var(--orange); box-shadow: 0 18px 40px rgba(0,0,0,.32), 0 0 26px rgba(255,106,0,.17), 0 0 14px rgba(0,191,255,.12); }
+    .product-image { height: 245px; background: radial-gradient(circle at 50% 45%, #1b4058, #091b2b 70%); display:flex; align-items:center; justify-content:center; overflow:hidden; }
+    .product-image img { width:100%; height:100%; object-fit:contain; padding:18px; transition:transform .4s; }
+    .product-card:hover .product-image img { transform:scale(1.045); }
+    .product-info { padding: 23px; }
+    .product-info h3 { font-size: 1.2rem; margin-bottom: 8px; }
+    .product-info p { color: var(--muted); font-size: .92rem; min-height: 48px; margin-bottom: 18px; }
+    .product-link { color: var(--orange); font-weight: 800; font-size: .9rem; }
+    .product-link:hover { color: var(--blue); }
+    .about-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items:center; }
+    .about-photo { min-height: 390px; border-radius: 18px; background:
+      linear-gradient(0deg,rgba(5,18,30,.15),rgba(5,18,30,.15)),
+      url("https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=1200&q=85") center/cover;
+      border:1px solid rgba(0,191,255,.28); box-shadow:0 0 35px rgba(0,191,255,.10); }
+    .about-copy h2 { font-size: clamp(2rem,4vw,3rem); line-height:1.15; margin-bottom:18px; }
+    .about-copy h2 span { color:var(--orange); }
+    .about-copy p { color:var(--muted); margin-bottom:18px; }
+    .feature-strip { padding: 34px 0; background: linear-gradient(90deg,rgba(0,191,255,.07),rgba(255,106,0,.06)); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+    .features { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; text-align:center; }
+    .feature strong { display:block; font-size:1.02rem; margin-bottom:5px; }
+    .feature span { color:var(--muted); font-size:.87rem; }
+    .feature-icon { color:var(--blue); font-size:1.5rem; margin-bottom:7px; }
+    .cta { text-align:center; background: radial-gradient(ellipse at center,rgba(0,191,255,.10),transparent 62%); }
+    .cta h2 { font-size:clamp(2rem,4vw,3rem); margin-bottom:12px; }
+    .cta p { color:var(--muted); margin:0 auto 25px; max-width:580px; }
+    footer { padding: 36px 0; background:#04111d; border-top:1px solid rgba(0,191,255,.2); box-shadow:0 -4px 30px rgba(0,191,255,.06); }
+    .footer-row { display:flex; justify-content:space-between; gap:20px; align-items:center; flex-wrap:wrap; }
+    footer p, footer a { color:var(--muted); font-size:.85rem; }
+    .footer-links { display:flex; gap:20px; flex-wrap:wrap; }
+    .footer-links a:hover { color:var(--orange); }
+    @media(max-width:800px) {
+      .nav-links { display:none; position:absolute; top:76px; left:0; right:0; background:#061827; padding:22px 5%; flex-direction:column; align-items:flex-start; border-bottom:1px solid var(--line); }
+      .nav-links.open { display:flex; }
+      .menu-btn { display:block; }
+      .nav .nav-cta { display:none; }
+      .hero { min-height:590px; background-position:58% center; }
+      .product-grid { grid-template-columns:1fr 1fr; }
+      .about-grid { grid-template-columns:1fr; gap:28px; }
+      .about-photo { min-height:300px; }
+    }
+    @media(max-width:560px) {
+      section { padding:66px 0; }
+      .product-grid { grid-template-columns:1fr; }
+      .product-image { height:260px; }
+      .features { grid-template-columns:1fr; gap:25px; }
+      .hero-content { padding:75px 0; }
+      h1 { letter-spacing:-1.5px; }
+    }
+  </style>
 </head>
-
 <body>
-
-<header>
-  <div class="container navbar">
-    <a class="logo-wrap" href="#home">
-      <div class="logo-icon">◢</div>
-      <div>
-        <div class="logo">Moto<span>Vanta</span></div>
-        <div class="tagline">Ride Smart. Ride Better.</div>
-      </div>
-    </a>
-
-    <button class="menu-btn" onclick="toggleMenu()" aria-label="Open menu">☰</button>
-
-    <nav id="nav">
-      <a href="#home">Home</a>
-      <a href="#products">Products</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </div>
-</header>
-
-<!-- HERO -->
-<section class="hero" id="home">
-  <div class="container">
-    <div class="hero-content">
-      <div class="orange-mark"></div>
-      <h1>Ride Smart.<br><span>Ride Better.</span></h1>
-      <p>Discover smart motorcycle gadgets and accessories designed for every rider.</p>
-      <a href="#products" class="btn">Explore Products →</a>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#home">MOTO<span>VANTA</span><small>RIDE SMART. RIDE BETTER.</small></a>
+      <nav class="nav-links" id="navLinks">
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="btn nav-cta" href="#products">Explore Gear</a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">☰</button>
     </div>
-  </div>
-</section>
+  </header>
 
-<!-- PRODUCTS -->
-<section class="section" id="products">
-  <div class="container">
-    <div class="section-heading">
-      <h2><span class="heading-line"></span>Explore Our Categories<span class="heading-line"></span></h2>
-      <p>Smart gear for smarter riders.</p>
-    </div>
-
-    <div class="products">
-      <article class="product">
-        <div class="product-img">
-          <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=900&q=85" alt="Motorcycle mobile holder">
-        </div>
-        <div class="product-info">
-          <h3>Mobile Holders</h3>
-          <p>Explore motorcycle phone mounts and navigation accessories.</p>
-          <a class="product-link" href="#contact">Explore More →</a>
-        </div>
-      </article>
-
-      <article class="product">
-        <div class="product-img">
-          <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=900&q=85" alt="Motorcycle accessories">
-        </div>
-        <div class="product-info">
-          <h3>USB Chargers</h3>
-          <p>Discover charging accessories for your motorcycle journeys.</p>
-          <a class="product-link" href="#contact">Explore More →</a>
-        </div>
-      </article>
-
-      <article class="product">
-        <div class="product-img">
-          <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=900&q=85" alt="Motorcycle touring equipment">
-        </div>
-        <div class="product-info">
-          <h3>Bluetooth Intercoms</h3>
-          <p>Explore communication gadgets for connected rides.</p>
-          <a class="product-link" href="#contact">Explore More →</a>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section class="about" id="about">
-  <div class="about-content">
-    <div class="orange-mark"></div>
-    <h2>About Moto<span>Vanta</span></h2>
-    <p>MotoVanta helps motorcycle riders discover useful gadgets and accessories through product information, comparisons and recommendations.</p>
-    <p>Our mission is simple: help riders make smarter buying decisions.</p>
-    <a href="#products" class="btn">Learn More →</a>
-  </div>
-  <div class="about-image">
-    <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=1200&q=90" alt="Motorcycle adventure">
-  </div>
-</section>
-
-<!-- FEATURES -->
-<div class="container">
-  <section class="features">
-    <div class="feature">
-      <div class="feature-icon">⬡</div>
-      <div><strong>Smart Shopping</strong><small>Helpful product guides</small></div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">➜</div>
-      <div><strong>Worldwide Discovery</strong><small>Explore global products</small></div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">♧</div>
-      <div><strong>Expert Guides</strong><small>Make informed choices</small></div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">★</div>
-      <div><strong>Rider Focused</strong><small>Built for every journey</small></div>
-    </div>
-  </section>
-</div>
-
-<!-- FOOTER -->
-<footer id="contact">
-  <div class="container">
-    <div class="footer-grid">
-      <div>
-        <div class="logo">Moto<span>Vanta</span></div>
-        <p class="tagline">Ride Smart. Ride Better.</p>
-        <p class="footer-text" style="margin-top:15px">
-          Discover motorcycle gadgets and accessories for your next adventure.
-        </p>
-        <div class="socials">
-          <a href="#contact" aria-label="Facebook">f</a>
-          <a href="#contact" aria-label="YouTube">▶</a>
-          <a href="#contact" aria-label="Instagram">◎</a>
-          <a href="#contact" aria-label="X">X</a>
+  <main>
+    <section class="hero" id="home">
+      <div class="container">
+        <div class="hero-content">
+          <div class="eyebrow">Gear up. Go further.</div>
+          <h1>Ride Smart.<br><span>Ride Better.</span></h1>
+          <p>Discover smart, practical motorcycle accessories designed to make every ride more connected, convenient and enjoyable.</p>
+          <div class="hero-actions">
+            <a class="btn" href="#products">Explore Products</a>
+            <a class="btn btn-outline" href="#about">Discover MotoVanta</a>
+          </div>
         </div>
       </div>
+    </section>
 
-      <div>
-        <h3 class="footer-title">Quick Links</h3>
-        <div class="footer-links">
-          <a href="#home">Home</a>
-          <a href="#products">Products</a>
-          <a href="#about">About Us</a>
-          <a href="#contact">Contact</a>
+    <section class="products" id="products">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Selected riding essentials</div>
+          <h2>Upgrade Your <span>Ride</span></h2>
+          <p>Explore useful riding accessories selected for everyday convenience and a better riding experience.</p>
+        </div>
+        <div class="product-grid">
+          <article class="product-card">
+            <div class="product-image">
+              <img src="https://www.kaedear.com/cdn/shop/files/m27-pa-black.jpg?v=1726141540&width=1200" alt="Premium black motorcycle phone holder" loading="lazy">
+            </div>
+            <div class="product-info">
+              <h3>Motorcycle Phone Holders</h3>
+              <p>Keep your phone securely mounted and navigation easy to view while riding.</p>
+              <a class="product-link" href="#contact">Explore holders →</a>
+            </div>
+          </article>
+          <article class="product-card">
+            <div class="product-image">
+              <img src="https://www.kaedear.com/cdn/shop/files/KDR-B13_top.jpg?v=1776833221&width=1200" alt="Motorcycle USB charging accessory" loading="lazy">
+            </div>
+            <div class="product-info">
+              <h3>USB Motorcycle Chargers</h3>
+              <p>Convenient charging accessories to help keep your devices powered on the road.</p>
+              <a class="product-link" href="#contact">Explore chargers →</a>
+            </div>
+          </article>
+          <article class="product-card">
+            <div class="product-image">
+              <img src="https://es.midlandeurope.com/media/cache/product_gallery/99/36/a6191b5358f18f4c2eb61a7fc4bf.jpg" alt="Premium motorcycle Bluetooth helmet intercom" loading="lazy">
+            </div>
+            <div class="product-info">
+              <h3>Bluetooth Helmet Intercoms</h3>
+              <p>Explore hands-free communication options for compatible helmets and devices.</p>
+              <a class="product-link" href="#contact">Explore intercoms →</a>
+            </div>
+          </article>
         </div>
       </div>
+    </section>
 
-      <div>
-        <h3 class="footer-title">Stay Connected</h3>
-        <p class="footer-text">Get updates about motorcycle gadgets and new product guides.</p>
-        <form class="email-form" onsubmit="event.preventDefault();alert('Email signup will be available soon.');">
-          <input type="email" placeholder="Enter your email address" required>
-          <button type="submit">➤</button>
-        </form>
+    <div class="feature-strip">
+      <div class="container features">
+        <div class="feature"><div class="feature-icon">✦</div><strong>Rider-Focused Picks</strong><span>Useful accessories for real rides</span></div>
+        <div class="feature"><div class="feature-icon">⌁</div><strong>Smart Convenience</strong><span>Make everyday riding easier</span></div>
+        <div class="feature"><div class="feature-icon">◎</div><strong>Explore With Confidence</strong><span>Check details before you choose</span></div>
       </div>
     </div>
 
-    <div class="copyright">
-      <p>© 2026 MotoVanta. All rights reserved.</p>
-      <p>Some links may be affiliate links. We may earn a commission at no extra cost to you.</p>
+    <section id="about">
+      <div class="container about-grid">
+        <div class="about-photo" role="img" aria-label="Motorcycle on an open road"></div>
+        <div class="about-copy">
+          <div class="eyebrow">The MotoVanta mindset</div>
+          <h2>Built Around the <span>Ride.</span></h2>
+          <p>MotoVanta is a motorcycle accessories discovery brand for riders who value smart gear, practical design and a better riding experience.</p>
+          <p>Our goal is to make it easier to explore useful accessories, compare options and find gear that suits your riding needs.</p>
+          <a class="btn btn-outline" href="#products">Find Your Gear</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <div class="container">
+        <div class="eyebrow">Your next ride starts here</div>
+        <h2>Make Every Ride <span style="color:var(--orange)">Smarter.</span></h2>
+        <p>Have a product question or a suggestion for gear we should feature? Get in touch with MotoVanta.</p>
+        <a class="btn" href="mailto:hello@motovanta.com?subject=MotoVanta%20Product%20Enquiry">Contact MotoVanta</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-row">
+      <a class="brand" href="#home">MOTO<span>VANTA</span><small>RIDE SMART. RIDE BETTER.</small></a>
+      <div class="footer-links">
+        <a href="#home">Home</a><a href="#products">Products</a><a href="#about">About</a><a href="#contact">Contact</a>
+      </div>
+      <p>© <span id="year"></span> MotoVanta. All rights reserved.</p>
     </div>
-  </div>
-</footer>
+  </footer>
 
-<script>
-function toggleMenu(){
-  document.getElementById('nav').classList.toggle('show');
-}
-</script>
-
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    menuBtn.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', String(isOpen));
+      menuBtn.textContent = isOpen ? '✕' : '☰';
+    });
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+        menuBtn.textContent = '☰';
+      });
+    });
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
