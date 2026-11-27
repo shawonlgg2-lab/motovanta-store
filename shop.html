@@ -4,7 +4,8 @@
 <title>Shop Gear — MotoVanta</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css"></head>
+<link rel="stylesheet" href="style.css"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="config.js"></script>
+</head>
 <body><div class="topline"></div>
 <header><div class="wrap nav"><a class="logo" href="index.html">MOTO<span>VANTA</span></a><nav class="navlinks" id="navlinks"><a href="index.html">HOME</a><a href="shop.html" class="active">SHOP GEAR</a><a href="blogger.html">MOTOVANTA BLOGGER</a><a href="guides.html">RIDER GUIDES</a><a href="about.html">ABOUT</a><a href="policies.html">POLICIES</a></nav>
 <div class="nav-actions"><a class="nav-cta" href="shop.html">Explore Store</a><button class="menu-btn" id="menuBtn" aria-label="Toggle menu" aria-expanded="false">☰</button></div></div></header>
@@ -13,7 +14,7 @@
 <div><a class="logo" href="index.html">MOTO<span>VANTA</span></a><p>Ride Smart. Ride Better.<br>Premium motorcycle gear, creator essentials and rider-first guides.</p></div>
 <div><h4>Collections</h4><div class="footer-links"><a href="shop.html?cat=riding">Riding Accessories</a><a href="blogger.html">MotoVanta Blogger</a><a href="blogger.html#kits">Creator Kits</a><a href="shop.html">Featured Gear</a></div></div>
 <div><h4>Discover</h4><div class="footer-links"><a href="guides.html">Rider Guides</a><a href="shop.html">Product Search</a><a href="about.html">About MotoVanta</a><a href="policies.html#affiliate">Affiliate Disclosure</a></div></div>
-<div><h4>Contact &amp; Legal</h4><div class="footer-links"><a href="policies.html#privacy">Privacy Policy</a><a href="policies.html#terms">Terms of Use</a><a href="mailto:Motoventa360@gmail.com">Email: Motoventa360@gmail.com</a><a href="tel:+97430461055">Call: +974 30461055</a><a href="https://wa.me/97430461055" target="_blank" rel="noopener">WhatsApp: Chat with us</a></div></div></div>
+<div><h4>Legal</h4><div class="footer-links"><a href="policies.html#privacy">Privacy Policy</a><a href="policies.html#terms">Terms of Use</a><a href="mailto:Motoventa360@gmail.com">Motoventa360@gmail.com</a><a href="tel:+97430461055">+974 30461055</a><a href="https://wa.me/97430461055" target="_blank" rel="noopener">WhatsApp</a></div></div></div>
 <div class="copyright"><span>© <span id="year"></span> MotoVanta. All rights reserved.</span><span>Independent product recommendations. Verify product fitment and specifications before purchase.</span></div></div></footer>
 <script src="script.js"></script><script>
 /* AFFILIATE LINKS — "" এর ভেতরে লিংক পেস্ট করুন। ফাঁকা থাকলে "Details soon" দেখাবে। */
@@ -27,4 +28,21 @@ var AFFILIATE_LINKS={
 "camera-mount":""
 };
 document.querySelectorAll('[data-link]').forEach(function(a){var u=(AFFILIATE_LINKS[a.dataset.link]||'').trim();if(u){a.href=u;a.target='_blank';a.rel='sponsored noopener';a.textContent=buttonText+' ↗'}});
-</script></body></html>
+</script>
+<script>
+(function(){
+ const cfg=window.MOTOVANTA_CONFIG||{};
+ if(!cfg.SUPABASE_URL||cfg.SUPABASE_URL.includes("YOUR-PROJECT")||!cfg.SUPABASE_ANON_KEY||cfg.SUPABASE_ANON_KEY.includes("YOUR_")||!window.supabase)return;
+ const client=window.supabase.createClient(cfg.SUPABASE_URL,cfg.SUPABASE_ANON_KEY);
+ const grid=document.querySelector(".product-grid");
+ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+ client.from("products").select("id,name,description,image_url,affiliate_url,price_label,is_featured,sort_order,categories(name,slug)").eq("status","active").order("sort_order").then(({data,error})=>{
+   if(error||!data||!data.length)return;
+   grid.innerHTML=data.map(p=>`<article class="product-card" data-category="${esc(p.categories?.slug||"all")}" data-search="${esc((p.name+" "+(p.description||"")).toLowerCase())}"><div class="product-image">${p.image_url?`<img src="${esc(p.image_url)}" alt="${esc(p.name)}" loading="lazy">`:''}<span class="product-type">${esc(p.categories?.name||"MOTOVANTA GEAR")}</span></div><div class="product-info"><span class="tag">${p.is_featured?"FEATURED GEAR":"MOTOVANTA PICK"}</span><h3>${esc(p.name)}</h3><p>${esc(p.description||"Explore this recommended product and check compatibility before ordering.")}</p><div class="product-meta"><span>${esc(p.price_label||p.categories?.name||"Affiliate pick")}</span>${p.affiliate_url?`<a class="link-arrow mv-affiliate" data-product-id="${p.id}" data-product-name="${esc(p.name)}" href="${esc(p.affiliate_url)}" target="_blank" rel="sponsored noopener">View product ↗</a>`:'<span class="link-arrow">Link coming soon</span>'}</div></div></article>`).join("");
+   document.querySelectorAll(".mv-affiliate").forEach(a=>a.addEventListener("click",()=>{client.from("affiliate_clicks").insert({product_id:a.dataset.productId,product_name:a.dataset.productName,destination:a.href,referrer:location.href}).then(()=>{});}));
+   const filters=document.querySelectorAll(".filter-btn");filters.forEach(b=>b.addEventListener("click",()=>{filters.forEach(x=>x.classList.remove("active"));b.classList.add("active");const f=b.dataset.filter;document.querySelectorAll(".product-card").forEach(c=>c.style.display=f==="all"||(f==="riding"&&/riding/i.test(c.dataset.category))||(f==="creator"&&/creator/i.test(c.dataset.category))?"":"none");}));
+ });
+})();
+</script>
+
+</body></html>
