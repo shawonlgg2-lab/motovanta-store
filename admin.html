@@ -33,6 +33,7 @@
     <nav class="side-nav">
       <button class="nav-item active" data-view="overview"><span>◫</span> Overview</button>
       <button class="nav-item" data-view="products"><span>▣</span> Products</button>
+      <button class="nav-item" data-view="imports"><span>⇧</span> Product Import</button>
       <button class="nav-item" data-view="categories"><span>▦</span> Categories</button>
       <button class="nav-item" data-view="posts"><span>▤</span> Blog & Guides</button>
       <button class="nav-item" data-view="analytics"><span>⌁</span> Analytics</button>
@@ -65,6 +66,32 @@
     <section class="view" id="view-products">
       <div class="section-toolbar"><div><div class="eyebrow">CATALOGUE</div><h1>Products</h1><p class="muted">Add and manage the products shown on your Shop page.</p></div><button id="addProductBtn" class="primary">＋ Add product</button></div>
       <div class="panel"><div class="table-tools"><input id="productSearch" class="search-input" placeholder="Search products…"><select id="productStatusFilter"><option value="">All statuses</option><option value="active">Active</option><option value="draft">Draft</option></select></div><div id="productsTable" class="table-wrap"></div></div>
+    </section>
+    <section class="view" id="view-imports">
+      <div class="section-toolbar"><div><div class="eyebrow">AFFILIATE CATALOGUE</div><h1>Product Import</h1><p class="muted">Import products from a prepared CSV exported from your affiliate catalogue or product feed.</p></div></div>
+      <div class="content-grid">
+        <article class="panel">
+          <div class="panel-head"><div><div class="eyebrow">CSV IMPORT</div><h3>Import product list</h3></div></div>
+          <p class="muted">Choose marketplace and upload a CSV. Existing products with the same marketplace + external product ID are updated; rows without an ID are added as new products.</p>
+          <div class="form-grid">
+            <label>Marketplace<select id="importMarketplace"><option value="amazon">Amazon</option><option value="aliexpress">AliExpress</option><option value="other">Other network</option></select></label>
+            <label>CSV file<input id="importFile" type="file" accept=".csv,text/csv"></label>
+          </div>
+          <p class="hint">Expected headers: name, description, image_url, affiliate_url, price_label, currency, external_product_id, category_slug, commission_rate, status. Required: name and affiliate_url. Use only links and data you are permitted to use under your affiliate programme.</p>
+          <button id="runImportBtn" class="primary">Import CSV</button>
+          <div id="importMessage" class="notice"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-head"><div><div class="eyebrow">API / FEED CONNECTIONS</div><h3>Automated integrations</h3></div></div>
+          <p>Amazon and AliExpress API/feed connections are designed as a server-side next phase. Credentials must stay in a secure backend or secrets manager—not in browser JavaScript or this dashboard.</p>
+          <div class="checklist">
+            <div class="check-item">○ Amazon Product Advertising API — requires eligible account and access approval</div>
+            <div class="check-item">○ AliExpress Affiliate API / approved product feed — requires programme access</div>
+            <div class="check-item">✓ CSV import available now</div>
+          </div>
+        </article>
+      </div>
+      <article class="panel"><div class="panel-head"><div><h3>Recent import activity</h3></div></div><div id="importsTable" class="table-wrap"></div></article>
     </section>
     <section class="view" id="view-categories">
       <div class="section-toolbar"><div><div class="eyebrow">STORE STRUCTURE</div><h1>Categories</h1><p class="muted">Organise products into Riding Gear, Creator Gear and more.</p></div><button id="addCategoryBtn" class="primary">＋ Add category</button></div>
@@ -102,8 +129,12 @@
     <label>Short description<textarea name="description" rows="3" maxlength="500"></textarea></label>
     <label>Product image URL<input name="image_url" type="url" placeholder="https://…"></label>
     <label>Or upload image<input name="image_file" type="file" accept="image/*"></label>
+    <label>Marketplace<select name="marketplace"><option value="manual">Manual / Other</option><option value="amazon">Amazon</option><option value="aliexpress">AliExpress</option><option value="other">Other network</option></select></label>
+    <label>External Product ID / ASIN<input name="external_product_id" maxlength="160" placeholder="Optional marketplace product ID"></label>
     <label>Affiliate URL<input name="affiliate_url" type="url" placeholder="https://…"></label>
     <label>Price label<input name="price_label" placeholder="e.g. Check latest price"></label>
+    <label>Currency<input name="currency" maxlength="8" value="USD"></label>
+    <label>Commission rate (%)<input name="commission_rate" type="number" min="0" max="100" step="0.001" placeholder="Optional; reported rate only"></label>
     <label>Product status<select name="status"><option value="active">Active / Published</option><option value="draft">Draft</option></select></label>
     <label>Featured product<select name="is_featured"><option value="false">No</option><option value="true">Yes</option></select></label>
     <label>Display order<input name="sort_order" type="number" value="0"></label>
