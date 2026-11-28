@@ -25,13 +25,56 @@ function renderPosts(){$("postsTable").innerHTML=table(["Article","Slug","Status
 function renderAnalytics(){const week=Date.now()-7*86400000;const recent=clicks.filter(c=>new Date(c.created_at).getTime()>=week);$("analyticsTotal").textContent=clicks.length;$("analyticsWeek").textContent=recent.length;$("analyticsProducts").textContent=new Set(clicks.map(c=>c.product_id).filter(Boolean)).size;$("analyticsTable").innerHTML=clicks.length?table(["Product","Destination","Referrer","Date"],clicks.map(c=>[esc(c.product_name||"—"),esc(c.destination||"—"),esc(c.referrer||"Direct"),fmtDate(c.created_at)])):'<div class="empty-state">No clicks yet. Click tracking begins after the public site is connected.</div>';}
 function renderChecklist(){const checks=[["Supabase connection",true],["Admin authentication",!!currentUser],["Products added",products.length>0],["Affiliate links configured",products.some(p=>p.affiliate_url)],["Contact email saved",true]];$("setupChecklist").innerHTML=checks.map(([t,ok])=>`<div class="check-item"><span>${ok?"✓":"○"}</span>${t} ${ok?"":"— pending"}</div>`).join("");}
 function openView(view){document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id==="view-"+view));document.querySelectorAll(".nav-item").forEach(b=>b.classList.toggle("active",b.dataset.view===view));const titles={overview:"Overview",products:"Products",imports:"Product Import",categories:"Categories",posts:"Blog & Guides",analytics:"Analytics",settings:"Store Settings"};$("pageTitle").textContent=titles[view]||"Overview";$("sidebar").classList.remove("open");}
-function dialog(type,record=null){dialogType=type;editing=record;$("recordForm").reset();$("productFields").classList.toggle("hidden",type!=="product");$("categoryFields").classList.toggle("hidden",type!=="category");$("postFields").classList.toggle("hidden",type!=="post");$("dialogEyebrow").textContent=type==="product"?"CATALOGUE":type==="category"?"STORE STRUCTURE":"CONTENT STUDIO";$("dialogTitle").textContent=(record?"Edit ":"Add ")+(type==="post"?"article":type);$("productCategory").innerHTML='<option value="">Uncategorised</option>'+categories.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join("");const form=$("recordForm");if(record){for(const [k,v] of Object.entries(record)){const field=form.elements[k];if(field&&field.type!=="file")field.value=v??"";}if(type==="product")form.elements.is_featured.value=String(!!record.is_featured);if(type==="category"){form.elements.category_name.value=record.name;form.elements.category_description.value=record.description||"";}if(type==="post"){form.elements.post_slug.value=record.slug;form.elements.post_status.value=record.status;}}$("recordDialog").showModal();}
+function dialog(type,record=null){
+  dialogType=type;editing=record;
+  $("recordForm").reset();
+  $("productFields").classList.toggle("hidden",type!=="product");
+  $("categoryFields").classList.toggle("hidden",type!=="category");
+  $("postFields").classList.toggle("hidden",type!=="post");
+  /* FIX: fields of the hidden forms are disabled, so the browser does not block Save on a hidden "required" field */
+  ["product","category","post"].forEach(t=>{$(t+"Fields").querySelectorAll("input,select,textarea").forEach(el=>{el.disabled=(t!==type);});});
+  $("dialogEyebrow").textContent=type==="product"?"CATALOGUE":type==="category"?"STORE STRUCTURE":"CONTENT STUDIO";
+  $("dialogTitle").textContent=(record?"Edit ":"Add ")+(type==="post"?"article":type);
+  $("productCategory").innerHTML='<option value="">Uncategorised</option>'+categories.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join("");
+  const form=$("recordForm");
+  if(record){
+    for(const [k,v] of Object.entries(record)){const field=form.elements[k];if(field&&field.type!=="file"&&!field.disabled)field.value=v??"";}
+    if(type==="product")form.elements.is_featured.value=String(!!record.is_featured);
+    if(type==="category"){form.elements.category_name.value=record.name;form.elements.category_description.value=record.description||"";form.elements.slug.value=record.slug||"";}
+    if(type==="post"){form.elements.post_slug.value=record.slug;form.elements.post_status.value=record.status;}
+  }
+  $("recordDialog").showModal();
+}
 function closeDialog(){$("recordDialog").close();editing=null;}
 async function uploadImage(file){if(!file)return null;if(!file.type.startsWith("image/"))throw Error("Please choose an image file.");if(file.size>5*1024*1024)throw Error("Image must be smaller than 5 MB.");const ext=(file.name.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"");const path=`products/${crypto.randomUUID()}.${ext}`;const {error}=await db.storage.from("product-images").upload(path,file,{upsert:false,contentType:file.type});if(error)throw error;return db.storage.from("product-images").getPublicUrl(path).data.publicUrl;}
-async function saveRecord(e){e.preventDefault();const f=$("recordForm"),v=Object.fromEntries(new FormData(f).entries());try{if(dialogType==="product"){const file=f.elements.image_file.files[0];if(file)v.image_url=await uploadImage(file);const payload={name:v.name.trim(),category_id:v.category_id||null,description:v.description||"",image_url:v.image_url||null,affiliate_url:v.affiliate_url||null,price_label:v.price_label||null,status:v.status||"draft",is_featured:v.is_featured==="true",sort_order:Number(v.sort_order||0),marketplace:v.marketplace||"manual",external_product_id:v.external_product_id||null,currency:(v.currency||"USD").trim().toUpperCase(),commission_rate:v.commission_rate===""?null:Number(v.commission_rate),product_source:"manual"};const q=editing?db.from("products").update(payload).eq("id",editing.id):db.from("products").insert(payload);const {error}=await q;if(error)throw error;}
-else if(dialogType==="category"){const payload={name:v.category_name.trim(),slug:slug(v.slug||v.category_name),description:v.category_description||""};const q=editing?db.from("categories").update(payload).eq("id",editing.id):db.from("categories").insert(payload);const {error}=await q;if(error)throw error;}
-else{const payload={title:v.title.trim(),slug:slug(v.post_slug||v.title),excerpt:v.excerpt||"",cover_image:v.cover_image||null,content:v.content||"",status:v.post_status||"draft",published_at:v.post_status==="published"?new Date().toISOString():null};const q=editing?db.from("posts").update(payload).eq("id",editing.id):db.from("posts").insert(payload);const {error}=await q;if(error)throw error;}
-closeDialog();say("Changes saved successfully.","success");await loadAll();}catch(err){say(err.message||"Save failed.","error");}}
+async function saveRecord(e){
+  e.preventDefault();
+  const f=$("recordForm"),v=Object.fromEntries(new FormData(f).entries());
+  try{
+    if(dialogType==="product"){
+      const file=f.elements.image_file.files[0];
+      if(file)v.image_url=await uploadImage(file);
+      const payload={name:v.name.trim(),category_id:v.category_id||null,description:v.description||"",image_url:v.image_url||null,affiliate_url:v.affiliate_url||null,price_label:v.price_label||null,status:v.status||"draft",is_featured:v.is_featured==="true",sort_order:Number(v.sort_order||0),marketplace:v.marketplace||"manual",external_product_id:v.external_product_id||null,currency:(v.currency||"USD").trim().toUpperCase(),commission_rate:v.commission_rate===""||v.commission_rate==null?null:Number(v.commission_rate),product_source:"manual"};
+      /* Extra fields (vehicle type, brand, price, availability). If the table does not have these columns yet, we save without them. */
+      const extra={vehicle_type:v.vehicle_type||"universal",brand:v.brand||null,availability_status:v.availability_status||"available",price_amount:(v.price_amount===""||v.price_amount==null)?null:Number(v.price_amount)};
+      const save=p=>editing?db.from("products").update(p).eq("id",editing.id):db.from("products").insert(p);
+      let res=await save({...payload,...extra});
+      if(res.error&&/column|schema cache/i.test(res.error.message||"")){res=await save(payload);if(!res.error)say("Saved. Vehicle type / brand / price were skipped because those columns are missing in the products table.","");}
+      if(res.error)throw res.error;
+    }
+    else if(dialogType==="category"){
+      const payload={name:v.category_name.trim(),slug:slug(v.slug||v.category_name),description:v.category_description||""};
+      const q=editing?db.from("categories").update(payload).eq("id",editing.id):db.from("categories").insert(payload);
+      const {error}=await q;if(error)throw error;
+    }
+    else{
+      const payload={title:v.title.trim(),slug:slug(v.post_slug||v.title),excerpt:v.excerpt||"",cover_image:v.cover_image||null,content:v.content||"",status:v.post_status||"draft",published_at:v.post_status==="published"?new Date().toISOString():null};
+      const q=editing?db.from("posts").update(payload).eq("id",editing.id):db.from("posts").insert(payload);
+      const {error}=await q;if(error)throw error;
+    }
+    closeDialog();say("Changes saved successfully.","success");await loadAll();
+  }catch(err){say(err.message||"Save failed.","error");}
+}
 async function removeRecord(tableName,id){if(!confirm("Delete this record? This action cannot be undone."))return;const {error}=await db.from(tableName).delete().eq("id",id);if(error){say(error.message,"error");return;}say("Record deleted.","success");await loadAll();}
 async function loadSettings(){const {data,error}=await db.from("site_settings").select("key,value");if(error)throw error;const map=Object.fromEntries((data||[]).map(x=>[x.key,x.value]));$("settingStoreName").value=map.store_name||"MotoVanta";$("settingEmail").value=map.business_email||"Motoventa360@gmail.com";$("settingPhone").value=map.phone||"+974 30461055";$("settingWhatsApp").value=map.whatsapp_number||"97430461055";$("settingInstagram").value=map.instagram_url||"";$("settingFacebook").value=map.facebook_url||"";$("settingTagline").value=map.tagline||"Ride Smart. Ride Better.";$("settingDescription").value=map.seo_description||"";}
 async function saveSettings(){const values={store_name:$("settingStoreName").value,business_email:$("settingEmail").value,phone:$("settingPhone").value,whatsapp_number:$("settingWhatsApp").value.replace(/\D/g,""),instagram_url:$("settingInstagram").value,facebook_url:$("settingFacebook").value,tagline:$("settingTagline").value,seo_description:$("settingDescription").value};const rows=Object.entries(values).map(([key,value])=>({key,value}));const {error}=await db.from("site_settings").upsert(rows,{onConflict:"key"});if(error){say(error.message,"error");return;}say("Store settings saved.","success");}
