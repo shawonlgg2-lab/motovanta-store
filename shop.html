@@ -71,7 +71,11 @@ document.querySelectorAll('[data-link]').forEach(function(a){var u=(AFFILIATE_LI
   var want=p||h;if(!want)return;
   if($$(".cat-section").some(function(s){return s.dataset.cat===want})||want==="riding"||want==="creator")state=want;
  }
- function init(){readUrlState();buildFilters();apply();}
+ function init(){
+  readUrlState();
+  if(state!=="all"&&!$$(".cat-section").some(function(s){return s.dataset.cat===state||s.dataset.group===state}))state="all";
+  buildFilters();apply();
+ }
  var s=$("#productSearch");if(s)s.addEventListener("input",apply);
 
  // Live products from Supabase: one section per category
