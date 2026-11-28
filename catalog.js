@@ -34,6 +34,7 @@
 
  run(BASE+EXTRA).then(function(r){return r.error?run(BASE):r}).then(function(res){
   var all=(res&&res.data)||[];
+  all.forEach(function(p){if((p.price_amount==null||p.price_amount==="")&&/^\s*\$?\s*\d+(\.\d+)?\s*$/.test(p.price_label||"")){p.price_amount=parseFloat(String(p.price_label).replace(/[^0-9.]/g,""));p.currency=p.currency||"USD";}});
   grids.forEach(function(g){build(g,all)});
  }).catch(function(){grids.forEach(function(g){setEmpty(g,true)})});
 
@@ -69,7 +70,7 @@
   if(grid.hasAttribute("data-group")){
    grid.classList.remove("product-grid");
    grid.innerHTML=order.map(function(s){var g=groups[s];
-    return '<section class="cat-section" id="'+esc(s)+'" data-cat="'+esc(s)+'"><div class="cat-head"><h2>'+esc(g.name)+'</h2><span>'+g.items.length+(g.items.length===1?" product":" products")+'</span></div><div class="product-grid">'+g.items.map(cardHTML).join("")+'</div></section>';
+    return '<section class="cat-section" id="cat-'+esc(s)+'" data-cat="'+esc(s)+'"><div class="cat-head"><h2>'+esc(g.name)+'</h2><span>'+g.items.length+(g.items.length===1?" product":" products")+'</span></div><div class="product-grid">'+g.items.map(cardHTML).join("")+'</div></section>';
    }).join("");
   }else{
    grid.innerHTML=items.map(cardHTML).join("");
@@ -99,13 +100,26 @@
   }
   if(search)search.addEventListener("input",apply);
 
+  var bar=null;
+  function pick(slug){
+   if(!bar)return false;
+   var b=bar.querySelector('.filter-btn[data-filter="'+slug+'"]');
+   if(!b)return false;b.click();
+   var t=grid.closest("section")||grid;t.scrollIntoView({behavior:"smooth",block:"start"});return true;
+  }
+  [].forEach.call(document.querySelectorAll(".sub-card[id]"),function(card){
+   card.style.cursor="pointer";
+   card.addEventListener("click",function(){if(!pick(card.id)){var sec=document.getElementById("cat-"+card.id);if(sec)sec.scrollIntoView({behavior:"smooth",block:"start"});}});
+  });
   if(grid.getAttribute("data-filters")==="1"&&order.length>1){
-   var bar=document.createElement("div");bar.className="cat-filters filter-list";
+   bar=document.createElement("div");bar.className="cat-filters filter-list";
    bar.innerHTML='<button class="filter-btn active" data-filter="all">All</button>'+order.map(function(s){return '<button class="filter-btn" data-filter="'+esc(s)+'">'+esc(groups[s].name)+'</button>'}).join("");
    grid.parentNode.insertBefore(bar,grid);
    [].forEach.call(bar.querySelectorAll(".filter-btn"),function(b){b.addEventListener("click",function(){
     state=b.dataset.filter;[].forEach.call(bar.querySelectorAll(".filter-btn"),function(x){x.classList.toggle("active",x===b)});apply();
    })});
+   var h=decodeURIComponent((location.hash||"").replace("#",""));
+   if(h)setTimeout(function(){pick(h)},60);
   }
  }
 })();
